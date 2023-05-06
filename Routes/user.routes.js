@@ -8,14 +8,14 @@ require("dotenv").config()
  
  userRouter.post("/register",async(req,res)=>{
 
-    const {email,name,password} = req.body;
+    const {email,name,password,isAdmin} = req.body;
     try {
         bcrypt.hash(password,5,async(err,secure_password)=>{
             if(err){
                 console.log(err)
             }
             else{
-                const user = new userModel({email,password:secure_password,name})
+                const user = new userModel({email,password:secure_password,name,isAdmin})
                 await user.save()
                 res.send({"msg":"new user registered"})
             }

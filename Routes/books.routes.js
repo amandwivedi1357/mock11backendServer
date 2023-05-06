@@ -3,9 +3,24 @@ const { bookModel } = require("../Model/bookModel")
 const bookRouter = express.Router()
 
 bookRouter.get("/",async(req,res)=>{
-    const books = await bookModel.find();
-    res.send(books)
+    
+
+    const {category,author}=req.query ;
+    let query={} ;
+    if(category){
+        query.category=category;
+}
+if(author){
+    query.author=author;
+}
+try{
+    const book=await bookModel.find(query);
+    res.send(book)
+}catch(err){
+    res.send({msg:err.message})
+}
 })
+
 
 bookRouter.get("/:id",async(req,res)=>{
     const bookId = req.params.id
@@ -27,10 +42,24 @@ bookRouter.delete("/delete/:id",async(req,res)=>{
     res.send({"msg":`book with id ${bookId} deleted`})
 })
 
-bookRouter.patch("/update/:id",(req,res)=>{
-    res.send("update books")
+bookRouter.patch("/update/:id",async(req,res)=>{
+    let id = req.params.id;
+    try {
+        await bookModel.findByIdAndUpdate({"_id":id},req.body)
+        res.send(`the book with id ${id} has been updated `)
+    } catch (error) {
+        console.log(error)
+        res.send({"err":"something went wrong"})
+    }
 })
 
 module.exports = {
     bookRouter
 }
+
+
+// "title": "unknown",
+//         "author": "gudiya",
+//         "category": "romantic",
+//         "price": 1000,
+//         "quantity": 1
