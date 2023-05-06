@@ -6,7 +6,7 @@ const orderSchema = mongoose.Schema({
     books : [{ type: ObjectId, ref: 'Book' }],
     totalAmount: Number
       
-})
+},{versionKey:false})
 
 const orderModel = mongoose.model("order",orderSchema)
 module.exports = {

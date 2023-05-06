@@ -8,7 +8,7 @@ const bookSchema = mongoose.Schema({
         price: Number,
         quantity: Number
       
-})
+},{versionKey:false})
 
 const bookModel = mongoose.model("book",bookSchema)
 module.exports = {

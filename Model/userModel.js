@@ -7,7 +7,7 @@ const userSchema = mongoose.Schema({
     password: String,
     isAdmin: Boolean
       
-})
+},{versionKey:false})
 
 const userModel = mongoose.model("user",userSchema)
 module.exports = {
